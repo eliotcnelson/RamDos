@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ram DOS</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        #terminal {
+            white-space: pre-wrap;
+            font-size: 16px;
+        }
+        #input-line {
+            display: flex;
+            align-items: center;
+        }
+        #command-input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
+            outline: none;
+            flex-grow: 1;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="terminal">Ram DOS v1.0.0 - Spiritual Enhancement System
+    Type HELP for commands.
+
+    ></div>
+<div id="input-line">
+    <span>></span>
+    <input type="text" id="command-input" autofocus>
+</div>
+<script>
+    const terminal = document.getElementById('terminal');
+    const commandInput = document.getElementById('command-input');
+    const availableCommands = ['HELP', 'ENLIGHTEN', 'CLS', 'EXIT'];
+
+    const loadingMessages = [
+        "MAKING SMALL TALK ABOUT SAN FRANCISCO'S HOMELESS PROBLEM",
+        "JOINING MAKER SPACE TO STEAL IDEAS",
+        "SUBSCRIBING MOM TO MY SUBSTACK",
+        "TOKENIZING MANIPURA CHAKRA",
+        "LOSING VIRGINITY ON GSB COHORT TRIP TO DUBAI",
+        "PRETENDING TO ENJOY MARC ANDREESEN'S PODCAST",
+        "EXPLAINING NEURAL NETWORK WEIGHTING TO BORED BUMBLE DATE FOR 45 STRAIGHT MINUTES",
+        "NAMING SON MATTEO DESPITE HAVING NO ITALIAN HERITAGE",
+        "WONDERING WHY I NEVER SEE MY FRIENDS FROM WHARTON ANYMORE"
+    ];
+
+    const spiritualGoals = [
+        "Fill the spiritual emptiness engendered by the vastness of the cosmos",
+        "Develop a deeper understanding of the Yajurveda",
+        "Break the cycle of Saṃsāra",
+        "Touch the Pure Land of the Buddha",
+        "Rebalance my energies",
+        "Process my ancestral trauma",
+        "Check my privilege",
+        "Combat loneliness"
+
+    ];
+
+    const actions = [
+        "going mushroom foraging",
+        "interrupting the diners at Flour and Water with a land acknowledgement",
+        "trying poly",
+        "hosting a fundraiser for an anti-union business group in my Noe Valley rowhouse",
+        "writing a six-figure check to the most close-at-hand billionaire tyring to dismantle teacher unions",
+        "asking ChatGPT to write my Feeld profile",
+        "asking my local priest to scrape their confessionals for my LLM",
+        "doing G and arguing about accelerationism",
+        "channelling the energy of my sexual and/or existential dissatisfaction into my adventure van",
+        "asking Claude to develop a mindfulness curriculum for the tent encampment under 101,"
+
+    ];
+
+    const companions = [
+        "my Y-Combinator cohort",
+        "a 17-year-old being groomed by a FAANG executive",
+        "the fifth-hire Twilio engineer whom I married in my late 20s only to realize I confused the material comfort of our liquidity event-funded life with real partnership and oh my god he can't even hold a conversation for 5 minutes",
+        "that back end engineer I did contact improv with at the Scale holiday party",
+        "whichever member of my polycue has the most unresolved intimacy issues",
+        "that 42-year-old guy with the beard from Feeld who says they're into 'holding space'",
+        "the person from the cuddle puddle whose Google security badge I accidentally took",
+        "an underemployed blood boy",
+        "the handsome labradoodle breeder who made my wife want to try ENM"
+    ];
+
+    function getRandomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function generateLoadingBar(progress) {
+        const width = 20;
+        const filled = Math.floor((width * progress) / 100);
+        const empty = width - filled;
+        return `[${'='.repeat(filled)}${' '.repeat(empty)}] ${progress}%`;
+    }
+
+    async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function runLoadingSequence(message) {
+        let progress = 0;
+        while (progress < 100) {
+            const increment = Math.floor(Math.random() * 5) + 1;
+            progress = Math.min(progress + increment, 100);
+
+            // Update last line with new progress
+            const lines = terminal.innerHTML.split('\n');
+            lines[lines.length - 1] = `${message}..... ${generateLoadingBar(progress)}`;
+            terminal.innerHTML = lines.join('\n');
+
+            const baseDelay = progress < 30 ? 150 : progress > 70 ? 200 : 100;
+            await sleep(baseDelay + Math.random() * 100);
+        }
+        terminal.innerHTML += '\n';
+    }
+
+    function generateFrame(message) {
+        const width = message.length + 4;
+        const border = '―'.repeat(width);
+        return `     
+     .'${border}'.
+     | ${message} |
+     '${border}'
+   
+          _.-/\`)
+         // / / )
+      .=// / / / )
+     //\`/ / / / /
+    // /     \` /
+   ||         /
+    \\\\       /
+     ))    .'
+     //    /
+         /
+     NAMASTE`;
+    }
+
+    async function generateEnlightenment() {
+        const usedMessages = new Set();
+        const numSequences = Math.floor(Math.random() * 2) + 2;  // 2-3 sequences
+
+        for (let i = 0; i < numSequences; i++) {
+            const availableMessages = loadingMessages.filter(msg => !usedMessages.has(msg));
+            const message = getRandomElement(availableMessages);
+            usedMessages.add(message);
+
+            terminal.innerHTML += '\n';
+            await sleep(500);
+            await runLoadingSequence(message);
+        }
+
+        const enlightenment = `${getRandomElement(spiritualGoals)} by ${getRandomElement(actions)} with ${getRandomElement(companions)}`;
+        terminal.innerHTML += generateFrame(enlightenment) + '\n\n';
+    }
+
+    commandInput.addEventListener('keydown', async function(event) {
+        if (event.key === 'Enter') {
+            const command = commandInput.value.trim().toUpperCase();
+            commandInput.value = '';
+
+            // Disable input during processing
+            commandInput.disabled = true;
+
+            terminal.innerHTML += `\n>${command}`;
+
+            switch(command) {
+                case 'HELP':
+                    terminal.innerHTML += `\nAvailable commands:
+ENLIGHTEN - Generate spiritual guidance
+HELP     - Show this help message
+CLS      - Clear screen
+EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
+                    break;
+
+                case 'CLS':
+                    terminal.innerHTML = '';
+                    break;
+
+                case 'ENLIGHTEN':
+                    await generateEnlightenment();
+                    break;
+
+                case 'EXIT':
+                    terminal.innerHTML += '\nExiting Ram DOS, preparing oneness with universe...\n\n';
+                    await sleep(3000);  // Wait a second for dramatic effect
+                    window.location.href = 'https://techcrunch.com/wp-content/uploads/2014/03/6051284614_46d257b86b.jpg';  // Replace with your desired URL
+                    break;
+
+                default:
+                    terminal.innerHTML += `\nBad command or file name: ${command}\n`;
+            }
+
+            if (command !== 'CLS') {
+                terminal.innerHTML += '\n';
+            }
+
+            // Re-enable input after processing
+            commandInput.disabled = false;
+            commandInput.focus();
+
+            // Auto-scroll to bottom
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    });
+
+    // Keep focus on input
+    document.addEventListener('click', function() {
+        commandInput.focus();
+    });
+
+</script>
+</body>
+</html>
