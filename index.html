@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Ram DOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             background-color: black;
@@ -9,14 +10,27 @@
             font-family: "Courier New", Courier, monospace;
             padding: 20px;
             margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         #terminal {
             white-space: pre-wrap;
             font-size: 16px;
+            flex-grow: 1;
+            margin-bottom: 10px;
         }
         #input-line {
             display: flex;
             align-items: center;
+            position: sticky;
+            bottom: 0;
+            background: black;
+            padding: 10px 0;
+        }
+        #command-form {
+            display: flex;
+            width: 100%;
         }
         #command-input {
             background: transparent;
@@ -27,6 +41,7 @@
             outline: none;
             flex-grow: 1;
             margin-left: 5px;
+            -webkit-appearance: none;
         }
     </style>
 </head>
@@ -36,12 +51,15 @@
 
     ></div>
 <div id="input-line">
-    <span>></span>
-    <input type="text" id="command-input" autofocus>
+    <form id="command-form">
+        <span>></span>
+        <input type="text" id="command-input" autocomplete="off" autocapitalize="none">
+    </form>
 </div>
 <script>
     const terminal = document.getElementById('terminal');
     const commandInput = document.getElementById('command-input');
+    const commandForm = document.getElementById('command-form');
     const availableCommands = ['HELP', 'ENLIGHTEN', 'CLS', 'EXIT'];
 
     const loadingMessages = [
@@ -65,7 +83,6 @@
         "Process my ancestral trauma",
         "Check my privilege",
         "Combat loneliness"
-
     ];
 
     const actions = [
@@ -79,7 +96,6 @@
         "doing G and arguing about accelerationism",
         "channelling the energy of my sexual and/or existential dissatisfaction into my adventure van",
         "asking Claude to develop a mindfulness curriculum for the tent encampment under 101,"
-
     ];
 
     const companions = [
@@ -115,7 +131,6 @@
             const increment = Math.floor(Math.random() * 5) + 1;
             progress = Math.min(progress + increment, 100);
 
-            // Update last line with new progress
             const lines = terminal.innerHTML.split('\n');
             lines[lines.length - 1] = `${message}..... ${generateLoadingBar(progress)}`;
             terminal.innerHTML = lines.join('\n');
@@ -149,7 +164,7 @@
 
     async function generateEnlightenment() {
         const usedMessages = new Set();
-        const numSequences = Math.floor(Math.random() * 2) + 2;  // 2-3 sequences
+        const numSequences = Math.floor(Math.random() * 2) + 2;
 
         for (let i = 0; i < numSequences; i++) {
             const availableMessages = loadingMessages.filter(msg => !usedMessages.has(msg));
@@ -165,53 +180,55 @@
         terminal.innerHTML += generateFrame(enlightenment) + '\n\n';
     }
 
-    commandInput.addEventListener('keydown', async function(event) {
-        if (event.key === 'Enter') {
-            const command = commandInput.value.trim().toUpperCase();
-            commandInput.value = '';
+    async function processCommand(command) {
+        commandInput.disabled = true;
 
-            // Disable input during processing
-            commandInput.disabled = true;
+        terminal.innerHTML += `\n>${command}`;
 
-            terminal.innerHTML += `\n>${command}`;
-
-            switch(command) {
-                case 'HELP':
-                    terminal.innerHTML += `\nAvailable commands:
+        switch(command) {
+            case 'HELP':
+                terminal.innerHTML += `\nAvailable commands:
 ENLIGHTEN - Generate spiritual guidance
+WHY      - Learn about Ram DOS
 HELP     - Show this help message
 CLS      - Clear screen
 EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
-                    break;
+                break;
 
-                case 'CLS':
-                    terminal.innerHTML = '';
-                    break;
+            case 'CLS':
+                terminal.innerHTML = '';
+                break;
 
-                case 'ENLIGHTEN':
-                    await generateEnlightenment();
-                    break;
+            case 'ENLIGHTEN':
+                await generateEnlightenment();
+                break;
 
-                case 'EXIT':
-                    terminal.innerHTML += '\nExiting Ram DOS, preparing oneness with universe...\n\n';
-                    await sleep(3000);  // Wait a second for dramatic effect
-                    window.location.href = 'https://techcrunch.com/wp-content/uploads/2014/03/6051284614_46d257b86b.jpg';  // Replace with your desired URL
-                    break;
+            case 'EXIT':
+                terminal.innerHTML += '\nExiting Ram DOS, preparing oneness with universe...\n\n';
+                await sleep(3000);
+                window.location.href = 'https://techcrunch.com/wp-content/uploads/2014/03/6051284614_46d257b86b.jpg';
+                break;
 
-                default:
-                    terminal.innerHTML += `\nBad command or file name: ${command}\n`;
-            }
+            default:
+                terminal.innerHTML += `\nBad command or file name: ${command}\n`;
+        }
 
-            if (command !== 'CLS') {
-                terminal.innerHTML += '\n';
-            }
+        if (command !== 'CLS') {
+            terminal.innerHTML += '\n';
+        }
 
-            // Re-enable input after processing
-            commandInput.disabled = false;
-            commandInput.focus();
+        commandInput.disabled = false;
+        commandInput.focus();
+        terminal.scrollTop = terminal.scrollHeight;
+    }
 
-            // Auto-scroll to bottom
-            terminal.scrollTop = terminal.scrollHeight;
+    // Handle form submission instead of keydown
+    commandForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const command = commandInput.value.trim().toUpperCase();
+        commandInput.value = '';
+        if (command) {
+            await processCommand(command);
         }
     });
 
@@ -219,7 +236,6 @@ EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
     document.addEventListener('click', function() {
         commandInput.focus();
     });
-
 </script>
 </body>
 </html>
