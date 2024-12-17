@@ -50,8 +50,9 @@
     </style>
 </head>
 <body>
-<div id="terminal"><span class="purple-header">RamDOS v1.0.0</span> - AI-Based Spiritual Guidance For The Tech Community
+<div id="terminal"><span class="purple-header">RamDOS v1.0.1</span> - AI-Based Spiritual Guidance For The Tech Community
     Copyright 2025 Yanzcorp Party Supply and Amalgamated Mining Concern
+    
     Type HELP for commands.
     ></div>
 <div id="input-line">
@@ -64,7 +65,7 @@
     const terminal = document.getElementById('terminal');
     const commandInput = document.getElementById('command-input');
     const commandForm = document.getElementById('command-form');
-    const availableCommands = ['HELP', 'ABOUT', 'ENLIGHTEN','CLS', 'EXIT'];
+    const availableCommands = ['HELP', 'ABOUT', 'ENLIGHTEN', 'CLS', 'EXIT'];
 
     const loadingMessages = [
         "MAKING SMALL TALK ABOUT SAN FRANCISCO'S HOMELESS PROBLEM",
@@ -86,11 +87,13 @@
         "Rebalance your energies",
         "Process your ancestral trauma",
         "Check your privilege",
-        "Combat loneliness"
+        "Combat loneliness",
+        "Break out of your K-hole"
     ];
 
     const actions = [
         "going mushroom foraging",
+        "bulk purchasing Kirkland-brand ketamine from Costco",
         "interrupting the diners at Flour and Water with a land acknowledgement",
         "trying poly",
         "hosting a fundraiser for an anti-union business group in your Noe Valley townhouse",
@@ -98,24 +101,44 @@
         "asking ChatGPT to write your Feeld profile",
         "asking your local priest to scrape their confessionals for your LLM",
         "doing G and arguing about accelerationism",
-        "channelling the energy of your sexual and/or existential dissatisfaction into an adventure van",
-        "asking Claude to develop a mindfulness curriculum for the tent encampment under 101"
+        "drop a copy of 'Sapiens' in the bowl of a monk doing their alms round",
+        "channelling the energy of your into an adventure van",
+        "asking Claude to develop a mindfulness curriculum for the tent encampment under 101",
+        "writing a 1000-word LinkedIn post about how your Kumbh Mela pilgrimage revolutionized your understanding of AWS serverless workflows"
     ];
 
     const companions = [
         "your Y-Combinator cohort",
         "a 17-year-old being groomed by a FAANG executive",
-        "the fifth-hire Twilio engineer whom you married in your late 20s only to realize they can't hold a conversation",
+        "the fifth-hire Twilio engineer whom you married in your late 20s only to realize their rich interior life can't satisfy you intellectually and/or sexually",
         "that Docusign engineer you did contact improv with at the Scale holiday party",
         "whichever member of your polycue has the most unresolved intimacy issues",
         "that 42-year-old Sequoia associate from Feeld who says they're into 'holding space'",
         "the person from the cuddle puddle whose Google security badge you accidentally took",
         "an underemployed blood boy",
-        "the handsome labradoodle breeder who made your wife want to try ENM"
+        "the handsome labradoodle breeder who made your wife want to try ENM",
+        "the only person who ever upvotes your Hacker News posts"
     ];
 
-    function getRandomElement(array) {
-        return array[Math.floor(Math.random() * array.length)];
+    const usedElements = {
+        loadingMessages: new Set(),
+        spiritualGoals: new Set(),
+        actions: new Set(),
+        companions: new Set()
+    };
+
+    function getRandomElement(array, arrayName) {
+        if (usedElements[arrayName].size === array.length) {
+            usedElements[arrayName].clear();
+        }
+
+        const availableElements = array.filter(element => !usedElements[arrayName].has(element));
+
+        const selectedElement = availableElements[Math.floor(Math.random() * availableElements.length)];
+
+        usedElements[arrayName].add(selectedElement);
+
+        return selectedElement;
     }
 
     function generateLoadingBar(progress) {
@@ -170,21 +193,17 @@
     }
 
     async function generateEnlightenment() {
-        const usedMessages = new Set();
         const numSequences = Math.floor(Math.random() * 2) + 2;
 
         for (let i = 0; i < numSequences; i++) {
-            const availableMessages = loadingMessages.filter(msg => !usedMessages.has(msg));
-            const message = getRandomElement(availableMessages);
-            usedMessages.add(message);
-
+            const message = getRandomElement(loadingMessages, 'loadingMessages');
             terminal.innerHTML += '\n';
             await sleep(500);
             await runLoadingSequence(message);
             window.scrollTo(0, document.body.scrollHeight);
         }
 
-        const enlightenment = `${getRandomElement(spiritualGoals)} by ${getRandomElement(actions)} with ${getRandomElement(companions)}`;
+        const enlightenment = `${getRandomElement(spiritualGoals, 'spiritualGoals')} by ${getRandomElement(actions, 'actions')} with ${getRandomElement(companions, 'companions')}`;
         terminal.innerHTML += generateFrame(enlightenment) + '\n\n';
         window.scrollTo(0, document.body.scrollHeight);
     }
@@ -231,7 +250,7 @@
                 break;
 
             case 'EXIT':
-                terminal.innerHTML += '\nExiting Ram DOS, preparing oneness with universe...\n\n';
+                terminal.innerHTML += '\nExiting <span class="purple-header">RamDOS</span>, preparing oneness with universe...\n\n';
                 await sleep(3000);
                 window.location.href = 'https://techcrunch.com/wp-content/uploads/2014/03/6051284614_46d257b86b.jpg';
                 break;
