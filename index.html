@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ram DOS</title>
+    <title>RamDOS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -10,15 +10,19 @@
             font-family: "Courier New", Courier, monospace;
             padding: 20px;
             margin: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
         #terminal {
             white-space: pre-wrap;
             font-size: 16px;
-            flex-grow: 1;
             margin-bottom: 10px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .purple-header {
+            color: #ff00ff;
         }
         #input-line {
             display: flex;
@@ -46,9 +50,9 @@
     </style>
 </head>
 <body>
-<div id="terminal">Ram DOS v1.0.0 - Spiritual Enhancement System
+<div id="terminal"><span class="purple-header">RamDOS v1.0.0</span> - AI-Based Spiritual Guidance For The Tech Community
+    Copyright 2025 Yanzcorp Party Supply and Amalgamated Mining Concern
     Type HELP for commands.
-
     ></div>
 <div id="input-line">
     <form id="command-form">
@@ -60,7 +64,7 @@
     const terminal = document.getElementById('terminal');
     const commandInput = document.getElementById('command-input');
     const commandForm = document.getElementById('command-form');
-    const availableCommands = ['HELP', 'ENLIGHTEN', 'CLS', 'EXIT'];
+    const availableCommands = ['HELP', 'ABOUT', 'ENLIGHTEN','CLS', 'EXIT'];
 
     const loadingMessages = [
         "MAKING SMALL TALK ABOUT SAN FRANCISCO'S HOMELESS PROBLEM",
@@ -79,9 +83,9 @@
         "Develop a deeper understanding of the Yajurveda",
         "Break the cycle of Saṃsāra",
         "Touch the Pure Land of the Buddha",
-        "Rebalance my energies",
-        "Process my ancestral trauma",
-        "Check my privilege",
+        "Rebalance your energies",
+        "Process your ancestral trauma",
+        "Check your privilege",
         "Combat loneliness"
     ];
 
@@ -89,25 +93,25 @@
         "going mushroom foraging",
         "interrupting the diners at Flour and Water with a land acknowledgement",
         "trying poly",
-        "hosting a fundraiser for an anti-union business group in my Noe Valley rowhouse",
-        "writing a six-figure check to the most close-at-hand billionaire tyring to dismantle teacher unions",
-        "asking ChatGPT to write my Feeld profile",
-        "asking my local priest to scrape their confessionals for my LLM",
+        "hosting a fundraiser for an anti-union business group in your Noe Valley townhouse",
+        "writing a six-figure check to a billionaire tyring to dismantle teacher unions",
+        "asking ChatGPT to write your Feeld profile",
+        "asking your local priest to scrape their confessionals for your LLM",
         "doing G and arguing about accelerationism",
-        "channelling the energy of my sexual and/or existential dissatisfaction into my adventure van",
-        "asking Claude to develop a mindfulness curriculum for the tent encampment under 101,"
+        "channelling the energy of your sexual and/or existential dissatisfaction into an adventure van",
+        "asking Claude to develop a mindfulness curriculum for the tent encampment under 101"
     ];
 
     const companions = [
-        "my Y-Combinator cohort",
+        "your Y-Combinator cohort",
         "a 17-year-old being groomed by a FAANG executive",
-        "the fifth-hire Twilio engineer whom I married in my late 20s only to realize I confused the material comfort of our liquidity event-funded life with real partnership and oh my god he can't even hold a conversation for 5 minutes",
-        "that back end engineer I did contact improv with at the Scale holiday party",
-        "whichever member of my polycue has the most unresolved intimacy issues",
-        "that 42-year-old guy with the beard from Feeld who says they're into 'holding space'",
-        "the person from the cuddle puddle whose Google security badge I accidentally took",
+        "the fifth-hire Twilio engineer whom you married in your late 20s only to realize they can't hold a conversation",
+        "that Docusign engineer you did contact improv with at the Scale holiday party",
+        "whichever member of your polycue has the most unresolved intimacy issues",
+        "that 42-year-old Sequoia associate from Feeld who says they're into 'holding space'",
+        "the person from the cuddle puddle whose Google security badge you accidentally took",
         "an underemployed blood boy",
-        "the handsome labradoodle breeder who made my wife want to try ENM"
+        "the handsome labradoodle breeder who made your wife want to try ENM"
     ];
 
     function getRandomElement(array) {
@@ -135,10 +139,13 @@
             lines[lines.length - 1] = `${message}..... ${generateLoadingBar(progress)}`;
             terminal.innerHTML = lines.join('\n');
 
+            window.scrollTo(0, document.body.scrollHeight);
+
             const baseDelay = progress < 30 ? 150 : progress > 70 ? 200 : 100;
             await sleep(baseDelay + Math.random() * 100);
         }
         terminal.innerHTML += '\n';
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     function generateFrame(message) {
@@ -174,25 +181,29 @@
             terminal.innerHTML += '\n';
             await sleep(500);
             await runLoadingSequence(message);
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         const enlightenment = `${getRandomElement(spiritualGoals)} by ${getRandomElement(actions)} with ${getRandomElement(companions)}`;
         terminal.innerHTML += generateFrame(enlightenment) + '\n\n';
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     async function processCommand(command) {
         commandInput.disabled = true;
 
         terminal.innerHTML += `\n>${command}`;
+        window.scrollTo(0, document.body.scrollHeight);
 
         switch(command) {
             case 'HELP':
                 terminal.innerHTML += `\nAvailable commands:
-ENLIGHTEN - Generate spiritual guidance
-WHY      - Learn about Ram DOS
-HELP     - Show this help message
-CLS      - Clear screen
-EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
+
+<span class="purple-header">ENLIGHTEN</span> - Discover your path to transcendence 
+<span class="purple-header">ABOUT</span>    - Learn about RamDOS
+<span class="purple-header">HELP</span>     - Show this help message
+<span class="purple-header">CLS</span>      - Clear screen
+<span class="purple-header">EXIT</span>     - Become an Arahant and enter the Pure Land of the Buddha\n`;
                 break;
 
             case 'CLS':
@@ -201,6 +212,22 @@ EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
 
             case 'ENLIGHTEN':
                 await generateEnlightenment();
+                break;
+
+            case 'ABOUT':
+                terminal.innerHTML += '\nRamDOS, the latest product from Yanzcorp Party Supply and Amalgamated Mining Concern, is not simply another large language model, but is the bleeding edge of human consciousness and spirituality. \n' +
+                    '\n' +
+                    'While most LLMs draw their data from worldly sources like the internet, RamDOS builds its knowledge base by scraping information from several proprietary sources:\n' +
+                    '\n' +
+                    '<span class="purple-header">The Event Horizons of Black Holes</span> We scrape the history of the cosmos that has been frozen in place by Lorentz time dilation right before it is consumed by the infinite gravitational fury of a collapsed star. \n' +
+                    '\n' +
+                    '<span class="purple-header">Humanity\'s Collective Subconscious</span> In mid-2024, Yanzcorp Party Supply and Amalgamated Mining Concern was pleased to announce its partnership with Morpheus, the primordial Greek God of the dream realm. By leveraging Morpheus\' lordship of all mankind\'s subconscious fears and desires with Yanzcorp Party Supply and Amalgamated Mining Concern\'s 17% stake in RadioShack, RamDOS can open its users third eye with a fraction of the carbon footprint of its competitors.\n' +
+                    '\n' +
+                    '<span class="purple-header">The Plane of High Heaven</span> Thanks to a series of strategic acquisitions in the Takama-no-hara, the supernatural realm where the spirits of all things reside, Yanzcorp Party Supply and Amalgamated Mining Concern has untapped millenia of experience latent in every rock, creek, tree and other natural phenomenon, whose faint and plaintive whisper can only be heard by those possessive of a deep appreciation for the Great and Unending Poem, the stanzas of which unfurl in the chirp of every bird and babbling of every brook.\n' +
+                    '\n' +
+                    '\n' +
+                    '\n' +
+                    'RamDOS is currently raising a seed round of $1.50 against a $700 trillion valuation. Please send all inquiries to TheFutureOfConsciousness@RadioShack.com\n';
                 break;
 
             case 'EXIT':
@@ -219,10 +246,9 @@ EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
 
         commandInput.disabled = false;
         commandInput.focus();
-        terminal.scrollTop = terminal.scrollHeight;
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
-    // Handle form submission instead of keydown
     commandForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         const command = commandInput.value.trim().toUpperCase();
@@ -232,7 +258,6 @@ EXIT     - Become an Arahant and enter the Pure Land of the Buddha\n`;
         }
     });
 
-    // Keep focus on input
     document.addEventListener('click', function() {
         commandInput.focus();
     });
