@@ -52,7 +52,7 @@
 <body>
 <div id="terminal"><span class="purple-header">RamDOS v1.0.1</span> - AI-Based Spiritual Guidance For The Tech Community
     Copyright 2025 Yanzcorp Party Supply and Amalgamated Mining Concern
-    
+
     Type HELP for commands.
     ></div>
 <div id="input-line">
@@ -70,15 +70,17 @@
     const loadingMessages = [
         "MAKING SMALL TALK ABOUT SAN FRANCISCO'S HOMELESS PROBLEM",
         "JOINING MAKER SPACE TO STEAL IDEAS",
-        "SUBSCRIBING MOM TO MY SUBSTACK",
+        "SUBSCRIBING MOM TO YOUR SUBSTACK",
         "TOKENIZING MANIPURA CHAKRA",
         "LOSING VIRGINITY ON GSB COHORT TRIP TO DUBAI",
         "PRETENDING TO ENJOY MARC ANDREESEN'S PODCAST",
-        "EXPLAINING NEURAL NETWORK WEIGHTING TO BORED BUMBLE DATE FOR 45 STRAIGHT MINUTES",
+        "EXPLAINING NEURAL NETWORK WEIGHTING TO DISINTERESTED BUMBLE DATE",
         "NAMING SON MATTEO DESPITE HAVING NO ITALIAN HERITAGE",
-        "WONDERING WHY YOU NEVER SEE MY FRIENDS FROM WHARTON ANYMORE",
+        "WONDERING WHY YOU NEVER SEE YOUR FRIENDS FROM WHARTON ANYMORE",
         "SLOWLY REALIZING YOUR FUNDER THINKS THIS COFFEE MEETING IS A DATE",
-        "SWEARING THAT NEXT YEAR YOU'LL FINALLY LEAVE IT ALL BEHIND FOR A JOB AT A 501(c)(3)"
+        "SWEARING THAT NEXT YEAR YOU'LL FINALLY LEAVE IT ALL BEHIND FOR A JOB AT A 501(c)(3)",
+        "PAYING TASK RABBITER TO REMOVE 'BUTTIGIEG 2020' BUMPER STICKER FROM YOUR AUDI A4",
+        "EXPLAINING HOW YOU LISTEN TO JOE ROGAN FOR THE UNORTHODOX INTERVIEW STYLE"
     ];
 
     const spiritualGoals = [
@@ -90,7 +92,8 @@
         "Process your ancestral trauma",
         "Check your privilege",
         "Combat loneliness",
-        "Break out of your K-hole"
+        "Break out of your K-hole",
+        "Liberated from suffering"
     ];
 
     const actions = [
@@ -103,10 +106,11 @@
         "asking ChatGPT to write your Feeld profile",
         "asking your local priest to scrape their confessionals for your LLM",
         "doing G and arguing about accelerationism",
-        "dropping a copy of 'Sapiens' in the bowl of a monk doing their alms round",
+        "placing a copy of 'Sapiens' in the bowl of a monk on alms round",
         "thinking more about your adventure van than you do your own children",
         "asking Claude to develop a mindfulness curriculum for the tent encampment under 101",
-        "writing a 1000-word LinkedIn post about how your Kumbh Mela pilgrimage revolutionized your understanding of AWS serverless workflows"
+        "writing a 1000-word LinkedIn post about how your Kumbh Mela pilgrimage revolutionized your understanding of AWS serverless workflows",
+        "interrupting an Oakland DSA-sponsored taillight clinic with your thoughts on "
     ];
 
     const companions = [
@@ -135,11 +139,8 @@
         }
 
         const availableElements = array.filter(element => !usedElements[arrayName].has(element));
-
         const selectedElement = availableElements[Math.floor(Math.random() * availableElements.length)];
-
         usedElements[arrayName].add(selectedElement);
-
         return selectedElement;
     }
 
@@ -154,6 +155,16 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    async function ensureScroll() {
+        // Wait for DOM updates to complete
+        await new Promise(resolve => setTimeout(resolve, 50));
+        window.scrollTo(0, document.body.scrollHeight);
+        // Double-check scroll after a slight delay to ensure content is rendered
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 100);
+    }
+
     async function runLoadingSequence(message) {
         let progress = 0;
         while (progress < 100) {
@@ -164,13 +175,13 @@
             lines[lines.length - 1] = `${message}..... ${generateLoadingBar(progress)}`;
             terminal.innerHTML = lines.join('\n');
 
-            window.scrollTo(0, document.body.scrollHeight);
+            await ensureScroll();
 
             const baseDelay = progress < 30 ? 150 : progress > 70 ? 200 : 100;
             await sleep(baseDelay + Math.random() * 100);
         }
         terminal.innerHTML += '\n';
-        window.scrollTo(0, document.body.scrollHeight);
+        await ensureScroll();
     }
 
     function generateFrame(message) {
@@ -202,19 +213,18 @@
             terminal.innerHTML += '\n';
             await sleep(500);
             await runLoadingSequence(message);
-            window.scrollTo(0, document.body.scrollHeight);
         }
 
         const enlightenment = `${getRandomElement(spiritualGoals, 'spiritualGoals')} by ${getRandomElement(actions, 'actions')} with ${getRandomElement(companions, 'companions')}`;
         terminal.innerHTML += generateFrame(enlightenment) + '\n\n';
-        window.scrollTo(0, document.body.scrollHeight);
+        await ensureScroll();
     }
 
     async function processCommand(command) {
         commandInput.disabled = true;
 
         terminal.innerHTML += `\n>${command}`;
-        window.scrollTo(0, document.body.scrollHeight);
+        await ensureScroll();
 
         switch(command) {
             case 'HELP':
@@ -225,6 +235,7 @@
 <span class="purple-header">HELP</span>     - Show this help message
 <span class="purple-header">CLS</span>      - Clear screen
 <span class="purple-header">EXIT</span>     - Become an Arahant and enter the Pure Land of the Buddha\n`;
+                await ensureScroll();
                 break;
 
             case 'CLS':
@@ -249,6 +260,7 @@
                     '\n' +
                     '\n' +
                     'RamDOS is currently raising a seed round of $1.50 against a $700 trillion valuation. Please send all inquiries to TheFutureOfConsciousness@RadioShack.com\n';
+                await ensureScroll();
                 break;
 
             case 'EXIT':
@@ -259,15 +271,17 @@
 
             default:
                 terminal.innerHTML += `\nBad command or file name: ${command}\n`;
+                await ensureScroll();
         }
 
         if (command !== 'CLS') {
             terminal.innerHTML += '\n';
+            await ensureScroll();
         }
 
         commandInput.disabled = false;
         commandInput.focus();
-        window.scrollTo(0, document.body.scrollHeight);
+        await ensureScroll();
     }
 
     commandForm.addEventListener('submit', async function(event) {
