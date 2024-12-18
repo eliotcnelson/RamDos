@@ -24,6 +24,9 @@
         .purple-header {
             color: #ff00ff;
         }
+        .white-header{
+            color: #ffffff;
+        }
         #input-line {
             display: flex;
             align-items: center;
@@ -50,7 +53,7 @@
     </style>
 </head>
 <body>
-<div id="terminal"><span class="purple-header">RamDOS v1.0.1</span> - AI-Based Spiritual Guidance For The Tech Community
+<div id="terminal"><span class="white-header">RamDOS v1.0.1</span> - AI-Based Spiritual Guidance For The Tech Community
     Copyright 2025 Yanzcorp Party Supply and Amalgamated Mining Concern
 
     Type HELP for commands.
@@ -81,7 +84,11 @@
         "SWEARING THAT NEXT YEAR YOU'LL FINALLY LEAVE IT ALL BEHIND FOR A JOB AT A 501(c)(3)",
         "PAYING TASK RABBITER TO REMOVE 'BUTTIGIEG 2020' BUMPER STICKER FROM YOUR AUDI A4",
         "EXPLAINING HOW YOU LISTEN TO JOE ROGAN FOR THE UNORTHODOX INTERVIEW STYLE",
-        "TEACHING YOURSELF RUST INSTEAD OF FINALLY GOING TO THERAPY"
+        "TEACHING YOURSELF RUST INSTEAD OF FINALLY GOING TO THERAPY",
+        "FELLING 200-YEAR-0LD PONDEROSA PINE TO GIVE LARRY A BETTER VIEW OF THE LAKE",
+        "WAITING TO TELL YOUR CEO WHAT HE NEEDS TO HEAR UNTIL AFTER YOUr VESTING PERIOD",
+        "VISITING YOUR PUBLIC DEFENDER FRIEND'S APARTMENT AND WONDERING WHERE THE RANGE HOOD IS",
+        "STOCKING FANNY PACK FOR ROOM SERVICE AND WISHING THE GIRLS WHO IGNORED YOU IN HIGH SCHOOL COULD SEE YOU NOW"
     ];
 
     const spiritualGoals = [
@@ -94,7 +101,8 @@
         "Check your privilege",
         "Combat loneliness",
         "Break out of your K-hole",
-        "Liberate yourself from suffering"
+        "Liberate yourself from suffering",
+        "Follow the Noble Eightfold Path"
     ];
 
     const actions = [
@@ -107,11 +115,13 @@
         "asking ChatGPT to write your Feeld profile",
         "asking your local priest to scrape their confessionals for your LLM",
         "doing G and arguing about accelerationism",
+        "writing a ponderous Medium post about ",
         "placing a copy of 'Sapiens' in the bowl of a monk on alms round",
         "thinking more about your adventure van than you do your own children",
         "asking Claude to develop a mindfulness curriculum for a tent encampment under 101",
         "writing a 1000-word LinkedIn post about how your Kumbh Mela pilgrimage revolutionized your understanding of AWS serverless workflows",
-        "interrupting an Oakland DSA-sponsored taillight clinic with your thoughts on functional programming"
+        "interrupting an Oakland DSA-sponsored taillight clinic with your thoughts on functional programming",
+        "feeding the Tipiṭaka into ChatGPT to achieve nirvana alongside your Daenerys Targaryen girlfriend bot"
     ];
 
     const companions = [
@@ -124,7 +134,8 @@
         "the person from the cuddle puddle whose Google security badge you accidentally took",
         "an underemployed blood boy",
         "the handsome labradoodle breeder who made your wife want to try ENM",
-        "the only person who ever upvotes your Hacker News posts",        
+        "the only person who ever upvotes your Hacker News posts", 
+        "the Lightspeed partner who is always the first person to view your Instagram story no matter the time"
     ];
 
     const usedElements = {
@@ -248,13 +259,13 @@
                 break;
 
             case 'ABOUT':
-                terminal.innerHTML += '\nRamDOS, the latest product from Yanzcorp Party Supply and Amalgamated Mining Concern, is not simply another large language model, but is the bleeding edge of human consciousness and spirituality. \n' +
+                terminal.innerHTML += '\n<span class="white-header">RamDOS</span>, the latest product from Yanzcorp Party Supply and Amalgamated Mining Concern, is not simply another large language model, but is the bleeding edge of human consciousness and spirituality. \n' +
                     '\n' +
                     'While most LLMs draw their data from worldly sources like the internet, RamDOS builds its knowledge base by scraping information from several proprietary sources:\n' +
                     '\n' +
                     '<span class="purple-header">The Event Horizons of Black Holes</span> We scrape the history of the cosmos that has been frozen in place by Lorentz time dilation right before it is consumed by the infinite gravitational fury of a collapsed star. \n' +
                     '\n' +
-                    '<span class="purple-header">Humanity\'s Collective Subconscious</span> In mid-2024, Yanzcorp Party Supply and Amalgamated Mining Concern was pleased to announce its partnership with Morpheus, the primordial Greek God of the dream realm. By leveraging Morpheus\' lordship of all mankind\'s subconscious fears and desires with Yanzcorp Party Supply and Amalgamated Mining Concern\'s 17% stake in RadioShack, RamDOS can open its users third eye with a fraction of the carbon footprint of its competitors.\n' +
+                    '<span class="purple-header">Humanity\'s Collective Subconscious</span> In mid-2024, Yanzcorp Party Supply and Amalgamated Mining Concern was pleased to announce its partnership with Morpheus, the primordial Greek God of the dream realm. By leveraging Morpheus\' lordship of all mankind\'s subconscious fears and desires with Yanzcorp Party Supply and Amalgamated Mining Concern\'s 17% stake in RadioShack, <span class = "white-header">RamDOS</span> can open its users third eye with a fraction of the carbon footprint of its competitors.\n' +
                     '\n' +
                     '<span class="purple-header">The Plane of High Heaven</span> Thanks to a series of strategic acquisitions in the Takama-no-hara, the supernatural realm where the spirits of all things reside, Yanzcorp Party Supply and Amalgamated Mining Concern has untapped millenia of experience latent in every rock, creek, tree and other natural phenomenon, whose faint and plaintive whisper can only be heard by those possessive of a deep appreciation for the Great and Unending Poem, the stanzas of which unfurl in the chirp of every bird and babbling of every brook.\n' +
                     '\n' +
